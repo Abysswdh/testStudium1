@@ -57,11 +57,16 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="group/sb w-[72px] hover:w-[240px] focus-within:w-[240px] bg-sidebar backdrop-blur-3xl border-r border-white/5 flex flex-col items-start py-6 pb-6 z-50 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] shrink-0 shadow-2xl relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none" />
+    <aside className="
+      fixed bottom-0 left-0 right-0 w-full h-[64px] flex-row items-center px-4 py-1 z-[60]
+      bg-sidebar/95 backdrop-blur-3xl border-t border-white/5 shadow-2xl transition-all duration-400
+      md:relative md:flex-col md:items-start md:w-[72px] md:hover:w-[240px] md:focus-within:w-[240px] 
+      md:h-screen md:border-r md:border-t-0 md:py-6 md:pb-6 md:px-0 md:group/sb shrink-0
+    ">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none hidden md:block" />
       
-      {/* Logo */}
-      <div className="flex items-center gap-4 px-[14px] mb-8 whitespace-nowrap w-full relative z-10 cursor-pointer">
+      {/* Logo (Hidden on Mobile) */}
+      <div className="hidden md:flex items-center gap-4 px-[14px] mb-8 whitespace-nowrap w-full relative z-10 cursor-pointer">
         <div className="w-[44px] h-[44px] min-w-[44px] rounded-[14px] bg-accent flex items-center justify-center text-white shadow-[0_0_24px_var(--color-accent-glow)] shrink-0 transition-transform duration-300 hover:scale-105">
           <Gamepad2 size={24} strokeWidth={2.5} />
         </div>
@@ -71,11 +76,11 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-col gap-1.5 flex-1 w-full px-3 relative z-10 overflow-y-auto no-scrollbar">
+      <nav className="flex flex-row md:flex-col items-center justify-around md:justify-start gap-1 flex-1 w-full px-2 md:px-3 relative z-10 overflow-y-auto no-scrollbar">
         {renderItems.map((item: any, idx) => {
           if (item.type === "header") {
             return (
-              <div key={`header-${idx}`} className="flex items-center justify-between text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mt-4 mb-1 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <div key={`header-${idx}`} className="hidden md:flex items-center justify-between text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mt-4 mb-1 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                 <span>{item.label}</span>
                 {item.label === "Tools" && !isEditingTools && (
                   <button 
@@ -85,83 +90,34 @@ export default function Sidebar() {
                     <PenTool size={12} />
                   </button>
                 )}
-                {item.label === "Tools" && isEditingTools && (
-                  <button 
-                    onClick={() => { playSelect(); setIsEditingTools(false); }}
-                    className="text-emerald-400 p-1"
-                  >
-                    <Check size={14} />
-                  </button>
-                )}
               </div>
             );
           }
           if (item.type === "divider") {
-            return <div key={`divider-${idx}`} className="h-px bg-white/5 my-2 mx-2" />;
+            return <div key={`divider-${idx}`} className="hidden md:block h-px bg-white/5 my-2 mx-2" />;
+          }
+
+          // Hide tools on mobile to keep bottom bar clean
+          if (item.type === "tool") {
+            return (
+              <div key={item.label} className="hidden md:flex relative items-center group/item w-full">
+                <NavItem item={item} isActive={pathname === item.href} isEditingTools={isEditingTools} playSelect={playSelect} playHover={playHover} router={router} />
+              </div>
+            );
           }
 
           const isActive = pathname === item.href;
-          const IconInfo = item.icon as React.ElementType;
           
           return (
-            <div key={item.label} className="relative flex items-center group/item w-full">
-              <button
-                onClick={() => {
-                  playSelect();
-                  if (!isEditingTools && item.href && item.href !== "#") router.push(item.href);
-                }}
-                onMouseEnter={playHover}
-                tabIndex={0}
-                data-focusable={!isEditingTools}
-                className={`
-                  w-[48px] h-[48px] rounded-2xl
-                  group-hover/sb:w-full
-                  group-focus-within/sb:w-full
-                  flex items-center gap-3.5 px-[12px]
-                  cursor-pointer outline-none overflow-hidden whitespace-nowrap
-                  transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
-                  border border-transparent relative
-                  ${
-                    isActive && !isEditingTools
-                      ? "bg-accent/10 border-accent/20 text-accent shadow-[inset_0_0_20px_var(--color-accent-glow)] group"
-                      : "bg-transparent text-slate-400 hover:bg-white/5 hover:text-white"
-                  }
-                  ${isEditingTools && item.type === "tool" ? "opacity-50 pointer-events-none" : ""}
-                `}
-              >
-                {isActive && !isEditingTools && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-1/2 bg-accent rounded-r-full shadow-[0_0_12px_var(--color-accent)] animate-[shimmer_2s_infinite]" />
-                )}
-                
-                <span className="shrink-0 flex items-center justify-center w-[24px]">
-                  <IconInfo size={22} strokeWidth={isActive ? 2.5 : 2} className={isActive && !isEditingTools ? "drop-shadow-[0_0_8px_var(--color-accent-glow)]" : ""} />
-                </span>
-                
-                <span
-                  className={`text-[14px] font-bold flex-1 text-left
-                    opacity-0 -translate-x-2
-                    transition-all duration-300 delay-[50ms]
-                    group-hover/sb:opacity-100 group-hover/sb:translate-x-0
-                    group-focus-within/sb:opacity-100 group-focus-within/sb:translate-x-0
-                    ${isActive && !isEditingTools ? "text-white" : ""}
-                  `}
-                >
-                  {item.label}
-                </span>
-                
-                {item.badge && !isEditingTools && (
-                  <span className="bg-accent text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center opacity-0 transition-opacity duration-300 delay-[100ms] group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 shrink-0 shadow-[0_0_10px_var(--color-accent-glow)]">
-                    {item.badge}
-                  </span>
-                )}
-              </button>
+            <div key={item.label} className="flex-1 md:flex-none relative flex items-center justify-center md:justify-start group/item w-full md:w-full">
+              <NavItem item={item} isActive={isActive} isEditingTools={isEditingTools} playSelect={playSelect} playHover={playHover} router={router} />
             </div>
           );
         })}
 
-        {/* Edit Tools Dropdown skeleton */}
+        {/* Edit Tools Dropdown - Desktop Only */}
         {isEditingTools && (
-          <div className="mt-2 bg-[#1a1625] border border-[#2e293f] rounded-2xl p-2 flex flex-col gap-1 w-[216px] animate-in fade-in slide-in-from-top-2 duration-300 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 shadow-xl ml-2">
+          <div className="hidden md:flex mt-2 bg-[#1a1625] border border-[#2e293f] rounded-2xl p-2 flex-col gap-1 w-[216px] animate-in fade-in slide-in-from-top-2 duration-300 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 shadow-xl ml-2">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 mb-1">Available Tools</span>
             {ALL_TOOLS.map((tool) => {
               const isSelected = activeTools.includes(tool.id);
@@ -187,8 +143,8 @@ export default function Sidebar() {
         )}
       </nav>
 
-      {/* Bottom */}
-      <div className="w-full px-3 flex flex-col gap-2 relative z-10 pt-4 mt-2">
+      {/* Bottom Profile / Settings (Desktop Only or simplified on mobile if needed) */}
+      <div className="hidden md:flex w-full px-3 flex-col gap-2 relative z-10 pt-4 mt-2">
         <button
           tabIndex={0}
           onMouseEnter={playHover}
@@ -224,5 +180,61 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+  );
+}
+
+function NavItem({ item, isActive, isEditingTools, playSelect, playHover, router }: any) {
+  const IconInfo = item.icon;
+  return (
+    <button
+      onClick={() => {
+        playSelect();
+        if (!isEditingTools && item.href && item.href !== "#") router.push(item.href);
+      }}
+      onMouseEnter={playHover}
+      tabIndex={0}
+      data-focusable={!isEditingTools}
+      className={`
+        w-[48px] h-[48px] rounded-2xl
+        md:group-hover/sb:w-full
+        md:group-focus-within/sb:w-full
+        flex items-center justify-center md:justify-start gap-3.5 px-[12px]
+        cursor-pointer outline-none overflow-hidden whitespace-nowrap
+        transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+        border border-transparent relative
+        ${
+          isActive && !isEditingTools
+            ? "bg-accent/10 border-accent/20 text-accent shadow-[inset_0_0_20px_var(--color-accent-glow)]"
+            : "bg-transparent text-slate-400 hover:bg-white/5 hover:text-white"
+        }
+        ${isEditingTools && item.type === "tool" ? "opacity-50 pointer-events-none" : ""}
+      `}
+    >
+      {isActive && !isEditingTools && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-1/2 bg-accent rounded-r-full shadow-[0_0_12px_var(--color-accent)] animate-[shimmer_2s_infinite] hidden md:block" />
+      )}
+      
+      <span className="shrink-0 flex items-center justify-center w-[24px]">
+        <IconInfo size={22} strokeWidth={isActive ? 2.5 : 2} className={isActive && !isEditingTools ? "drop-shadow-[0_0_8px_var(--color-accent-glow)]" : ""} />
+      </span>
+      
+      <span
+        className={`hidden md:block text-[14px] font-bold flex-1 text-left
+          opacity-0 -translate-x-2
+          transition-all duration-300 delay-[50ms]
+          md:group-hover/sb:opacity-100 md:group-hover/sb:translate-x-0
+          md:group-focus-within/sb:opacity-100 md:group-focus-within/sb:translate-x-0
+          ${isActive && !isEditingTools ? "text-white" : ""}
+        `}
+      >
+        {item.label}
+      </span>
+      
+      {item.badge && !isEditingTools && (
+        <span className="hidden md:block bg-accent text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center opacity-0 transition-opacity duration-300 delay-[100ms] md:group-hover/sb:opacity-100 md:group-focus-within/sb:opacity-100 shrink-0 shadow-[0_0_10px_var(--color-accent-glow)]">
+          {item.badge}
+        </span>
+      )}
+    </button>
   );
 }

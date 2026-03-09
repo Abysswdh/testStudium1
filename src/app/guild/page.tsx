@@ -9,18 +9,18 @@ export default function GuildHub() {
   const [activeTab, setActiveTab] = useState<TabId>("your_guild");
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 w-full animate-in fade-in duration-500 max-w-[1400px] mx-auto mt-6">
+    <div className="flex-1 flex flex-col min-h-0 w-full animate-in fade-in duration-500 max-w-[1400px] mx-auto mt-4 md:mt-6 pb-24 md:pb-0 px-4 md:px-0">
       
       {/* Top Header & Navigation */}
-      <div className="flex flex-col items-center mb-8 gap-6">
-        <h1 className="font-[var(--font-fredoka)] text-[40px] font-bold text-white tracking-wider flex items-center gap-4">
-          <span className="text-4xl">🛡️</span> Guild Center
+      <div className="flex flex-col items-center mb-6 md:mb-8 gap-4 md:gap-6 text-center">
+        <h1 className="font-[var(--font-fredoka)] text-3xl md:text-[40px] font-bold text-white tracking-wider flex items-center justify-center gap-4">
+          <span className="text-3xl md:text-4xl">🛡️</span> Guild Center
         </h1>
         <GuildTabs activeTab={activeTab} onChange={setActiveTab} />
       </div>
 
       {/* Tab Content Placeholder */}
-      <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-[#2e293f] rounded-[32px] bg-[#1a1625]/50 m-4 p-10 animate-in fade-in zoom-in duration-300">
+      <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-[#2e293f] rounded-[24px] md:rounded-[32px] bg-[#1a1625]/50 m-0 md:m-4 p-6 md:p-10 animate-in fade-in zoom-in duration-300 min-h-[300px]">
         
         {activeTab === "your_guild" && (
           <div className="flex flex-col items-center text-center max-w-lg">

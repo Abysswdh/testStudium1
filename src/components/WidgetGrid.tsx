@@ -129,8 +129,15 @@ export default function WidgetGrid() {
     .filter((l: any) => activeIds.includes(l.i))
     .map((l: any) => ({ ...l, static: !editing, isDraggable: editing, isResizable: editing }));
 
+  // Calculate dynamic columns
+  const cols = useMemo(() => {
+    if (width < 640) return 1;
+    if (width < 1024) return 2;
+    return 4;
+  }, [width]);
+
   return (
-    <div className="animate-fade-up" ref={containerRef}>
+    <div className="animate-fade-up pb-20 md:pb-0" ref={containerRef}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4 mt-8">
         <h2 className="font-[var(--font-fredoka)] text-xl font-bold text-white tracking-wider flex items-center gap-2">Stats & Progress</h2>
@@ -163,8 +170,8 @@ export default function WidgetGrid() {
         <GridLayout
           className="relative"
           layout={filteredLayout}
-          cols={4}
-          rowHeight={110}
+          cols={cols}
+          rowHeight={width < 640 ? 140 : 110}
           width={width}
           margin={[10, 10]}
           isDraggable={editing}

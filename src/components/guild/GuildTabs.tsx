@@ -52,7 +52,7 @@ export default function GuildTabs({ activeTab, onChange }: GuildTabsProps) {
   }, [activeTab, onChange, playSelect]);
 
   return (
-    <div className="flex items-center gap-2 p-1.5 bg-[#1a1625] rounded-[24px] border border-[#2e293f] mx-auto w-fit shadow-lg">
+    <div className="flex items-center gap-1 md:gap-2 p-1 md:p-1.5 bg-[#1a1625] rounded-[20px] md:rounded-[24px] border border-[#2e293f] mx-auto w-full md:w-fit shadow-lg overflow-x-auto no-scrollbar max-w-full">
       {tabs.map((tab, idx) => {
         const isActive = activeTab === tab.id;
         
@@ -67,18 +67,18 @@ export default function GuildTabs({ activeTab, onChange }: GuildTabsProps) {
             onMouseEnter={playHover}
             tabIndex={0}
             className={`
-              flex items-center gap-3 px-6 py-3 rounded-full outline-none
+              flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 px-3 md:px-6 py-2 md:py-3 rounded-full outline-none
               transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
               ${isActive 
-                ? "bg-[#2a2438] text-white shadow-[0_0_20px_rgba(168,85,247,0.15)] border border-purple-500/30" 
+                ? "bg-[#2a2438] text-white shadow-[0_0_20px_rgba(168,85,247,0.15)] border border-purple-500/30 font-bold" 
                 : "bg-transparent text-slate-400 hover:text-white hover:bg-white/5 border border-transparent"
               }
             `}
           >
-            <span className={isActive ? "text-purple-400" : "text-slate-500"}>
+            <span className={`${isActive ? "text-purple-400" : "text-slate-500"} shrink-0`}>
               {tab.icon}
             </span>
-            <span className="font-bold text-[15px]">{tab.label}</span>
+            <span className="font-bold text-[13px] md:text-[15px] whitespace-nowrap">{tab.label}</span>
           </button>
         );
       })}

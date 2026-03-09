@@ -7,7 +7,7 @@ export default function StadiumView({ onExit }: { onExit?: () => void }) {
     <div className="flex-1 flex flex-col min-h-0 w-full animate-in fade-in duration-500 relative">
       <ArenaHeader onExit={onExit} />
       
-      <div className="flex-1 grid grid-cols-[300px_1fr_300px] gap-8 mt-6 max-w-[1400px] mx-auto w-full">
+      <div className="flex-1 flex flex-col lg:grid lg:grid-cols-[300px_1fr_300px] gap-6 lg:gap-8 mt-4 lg:mt-6 max-w-[1400px] mx-auto w-full pb-24 lg:pb-0 px-2 md:px-0 overflow-y-auto lg:overflow-visible no-scrollbar">
         {/* Player 1 (You) */}
         <PlayerBadge 
           name="You"

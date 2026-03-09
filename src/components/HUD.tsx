@@ -35,28 +35,30 @@ export default function HUD() {
   }, [toggleBGM, nextTrack, prevTrack]);
 
   return (
-    <div className="h-12 min-h-[48px] bg-sidebar2/50 backdrop-blur-md border-t border-white/5 flex items-center px-8 gap-5 z-20">
-      <HudKey keys={["W", "A", "S", "D"]} label="Navigate" />
-      <div className="w-px h-4 bg-white/10" />
-      <HudKey keys={["↑", "↓", "←", "→"]} label="Arrows" />
-      <div className="w-px h-4 bg-white/10" />
-      <HudKey keys={["Enter"]} label="Select" />
-      <div className="w-px h-4 bg-white/10" />
-      <HudKey keys={["Esc"]} label="Back" />
-      <div className="w-px h-4 bg-white/10" />
-      
-      {/* Dynamic Guild Hub Keys */}
-      {pathname === "/guild" && (
-        <>
-          <HudKey keys={["←", "→"]} label="Switch Tab" />
-          <div className="w-px h-4 bg-white/10" />
-          <HudKey keys={["↑", "↓"]} label="Exit Tab" />
-          <div className="w-px h-4 bg-white/10" />
-        </>
-      )}
+    <div className="h-12 min-h-[48px] bg-sidebar2/80 md:bg-sidebar2/50 backdrop-blur-md border-t border-white/5 flex items-center px-4 md:px-8 gap-2 md:gap-5 z-20 mb-[64px] md:mb-0">
+      <div className="hidden md:flex items-center gap-5">
+        <HudKey keys={["W", "A", "S", "D"]} label="Navigate" />
+        <div className="w-px h-4 bg-white/10" />
+        <HudKey keys={["↑", "↓", "←", "→"]} label="Arrows" />
+        <div className="w-px h-4 bg-white/10" />
+        <HudKey keys={["Enter"]} label="Select" />
+        <div className="w-px h-4 bg-white/10" />
+        <HudKey keys={["Esc"]} label="Back" />
+        <div className="w-px h-4 bg-white/10" />
+        
+        {/* Dynamic Guild Hub Keys */}
+        {pathname === "/guild" && (
+          <>
+            <HudKey keys={["←", "→"]} label="Switch Tab" />
+            <div className="w-px h-4 bg-white/10" />
+            <HudKey keys={["↑", "↓"]} label="Exit Tab" />
+            <div className="w-px h-4 bg-white/10" />
+          </>
+        )}
+      </div>
 
       {/* Music Player */}
-      <div className="flex items-center gap-1.5 bg-white/5 p-1 px-2 rounded-xl border border-white/5">
+      <div className="flex-1 md:flex-none flex items-center gap-1.5 bg-white/5 p-1 px-2 rounded-xl border border-white/5 overflow-hidden">
         <button 
           onClick={() => { playSelect(); prevTrack(); }}
           className="p-1.5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer outline-none focus:ring-1 focus:ring-accent"
@@ -83,17 +85,17 @@ export default function HUD() {
           <SkipForward size={14} />
         </button>
 
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-6 bg-white/10 mx-1 hidden md:block" />
 
-        <div className="marquee-container flex flex-col justify-center">
-          <span className={`text-[10px] font-bold tracking-tight text-accent-light uppercase ${bgmPlaying ? 'animate-marquee' : 'text-slate-500'}`}>
-            {bgmPlaying ? `Now Playing: ${currentTrackName}` : "Music Paused"}
+        <div className="marquee-container flex flex-col justify-center min-w-[80px] md:min-w-0">
+          <span className={`text-[9px] md:text-[10px] font-bold tracking-tight text-accent-light uppercase whitespace-nowrap ${bgmPlaying ? 'animate-marquee' : 'text-slate-500'}`}>
+            {bgmPlaying ? `${currentTrackName}` : "Paused"}
           </span>
         </div>
 
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-6 bg-white/10 mx-1 hidden sm:block" />
 
-        <div className="flex items-center gap-2 px-1">
+        <div className="hidden sm:flex items-center gap-2 px-1">
           <Volume2 size={14} className="text-slate-500" />
           <input 
             type="range"
@@ -102,12 +104,12 @@ export default function HUD() {
             step="0.05"
             value={bgmVolume}
             onChange={(e) => setBgmVolume(parseFloat(e.target.value))}
-            className="w-16 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
+            className="w-12 md:w-16 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
           />
         </div>
       </div>
 
-      <div className="ml-auto text-[12px] font-bold text-slate-300 flex items-center gap-3">
+      <div className="hidden md:flex ml-auto text-[12px] font-bold text-slate-300 items-center gap-3">
         <span className="text-accent-light">🧙 Abyasa</span>
         <span className="text-white/20">|</span>
         <span>Lv.7 Mage</span>

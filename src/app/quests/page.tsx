@@ -17,11 +17,11 @@ export default function QuestsPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-8">
+    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-24 md:pb-8 px-4 md:px-0">
       
       {/* Top Header / Filters */}
-      <div className="flex items-center justify-between">
-        <div className="flex gap-2">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar w-full lg:w-auto pb-2 lg:pb-0">
           {filters.map((f) => (
             <button
               key={f.label}
@@ -29,7 +29,7 @@ export default function QuestsPage() {
               onMouseEnter={playHover}
               tabIndex={0}
               data-focusable={true}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold transition-all cursor-pointer outline-none border ${
+              className={`flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl text-[12px] md:text-[13px] font-bold transition-all cursor-pointer outline-none border whitespace-nowrap ${
                 filter === f.label
                   ? "bg-sidebar2 text-white border-sidebar"
                   : "bg-white text-muted border-blue-500/10 hover:border-sidebar2/30 hover:text-slate-800"
@@ -45,7 +45,7 @@ export default function QuestsPage() {
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-2 text-[13px] font-bold text-muted">
+        <div className="flex items-center gap-2 text-[12px] md:text-[13px] font-bold text-muted ml-1 lg:ml-0">
           <span>Sort by:</span>
           <select className="bg-transparent border-none text-slate-800 outline-none font-bold cursor-pointer hover:text-accent transition-colors">
             <option>Priority</option>
@@ -56,7 +56,7 @@ export default function QuestsPage() {
       </div>
 
       {/* Main Grid: Left (Main Quests) + Right (Side Quests) */}
-      <div className="grid grid-cols-[1fr_340px] gap-6 items-start">
+      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_340px] gap-6 items-start">
         
         {/* LEFT COLUMN: Main Quests */}
         <div className="flex flex-col gap-4">

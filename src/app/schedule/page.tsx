@@ -112,13 +112,13 @@ export default function SchedulePage() {
   ];
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-8">
+    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-24 md:pb-8 px-4 md:px-0">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-blue-500/[0.08]">
-        <h2 className="font-[var(--font-fredoka)] text-[22px] font-bold text-slate-900 flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-blue-500/[0.08] gap-3">
+        <h2 className="font-[var(--font-fredoka)] text-[20px] md:text-[22px] font-bold text-slate-900 flex items-center gap-2">
           My Schedule <span className="text-muted text-sm cursor-help">ℹ️</span>
         </h2>
-        <div className="flex items-center gap-4 text-[11px] font-bold text-accent">
+        <div className="hidden sm:flex items-center gap-4 text-[11px] font-bold text-accent">
           <button className="hover:underline cursor-pointer outline-none focus:ring-2 focus:ring-accent rounded">View Academic Calendar</button>
           <span className="text-blue-500/20">•</span>
           <button className="hover:underline cursor-pointer outline-none focus:ring-2 focus:ring-accent rounded">Unsync Outlook</button>
@@ -126,14 +126,14 @@ export default function SchedulePage() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <button
             onClick={playSelect}
             onMouseEnter={playHover}
             tabIndex={0}
             data-focusable={true}
-            className="px-4 py-1.5 bg-sidebar text-white text-[11px] font-bold rounded-md hover:bg-sidebar2 transition-colors outline-none shadow-sm cursor-pointer tracking-wide"
+            className="px-4 py-1.5 bg-sidebar text-white text-[10px] md:text-[11px] font-bold rounded-md hover:bg-sidebar2 transition-colors outline-none shadow-sm cursor-pointer tracking-wide"
           >
             TODAY
           </button>
@@ -157,7 +157,7 @@ export default function SchedulePage() {
               <span className="text-xs font-bold leading-none translate-x-0.5">&gt;</span>
             </button>
           </div>
-          <span className="text-[13px] font-bold text-slate-800 ml-2">March 2026 ⌄</span>
+          <span className="text-[12px] md:text-[13px] font-bold text-slate-800 ml-1 md:ml-2">March 2026 ⌄</span>
         </div>
         
         <button

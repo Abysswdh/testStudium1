@@ -5,23 +5,23 @@ import { Gamepad2, PencilLine, CalendarDays, Target, Shield, Flame } from "lucid
 export default function WelcomeRow() {
   const router = useRouter();
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-6 flex-1 min-h-[260px] animate-fade-up w-full max-w-[1400px] mx-auto mt-6" style={{ animationDelay: "0.1s" }}>
+    <div className="flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-4 md:gap-6 flex-1 min-h-[260px] animate-fade-up w-full max-w-[1400px] mx-auto mt-4 md:mt-6" style={{ animationDelay: "0.1s" }}>
       {/* Character Card Hero */}
-      <div className="bg-[#1f1b2e] border-2 border-transparent hover:border-[#383152] rounded-[32px] flex items-end relative overflow-hidden pl-[220px] p-8 min-h-[260px] cursor-pointer transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] group/hero">
+      <div className="bg-[#1f1b2e] border-2 border-transparent hover:border-[#383152] rounded-[32px] flex flex-col md:flex-row items-center md:items-end relative overflow-hidden p-6 md:p-8 md:pl-[220px] min-h-[260px] cursor-pointer transition-all duration-300 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] group/hero">
         {/* Abstract Ambient Glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(168,85,247,0.1),transparent_70%)] rounded-full mix-blend-screen pointer-events-none" />
         
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-[0.03] mix-blend-overlay" />
-        <div className="absolute left-0 bottom-0 h-full w-[220px] flex items-end justify-center pointer-events-none group-hover/hero:scale-105 group-hover/hero:-translate-y-2 transition-transform duration-500">
-          <div className="text-[140px] leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] animate-[charIdle_4s_ease-in-out_infinite] mb-2">
+        <div className="relative md:absolute md:left-0 md:bottom-0 h-32 md:h-full w-full md:w-[220px] flex items-center justify-center md:items-end pointer-events-none group-hover/hero:scale-105 group-hover/hero:-translate-y-2 transition-transform duration-500 mb-4 md:mb-0">
+          <div className="text-[100px] md:text-[140px] leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] animate-[charIdle_4s_ease-in-out_infinite] md:mb-2">
             🧙
           </div>
         </div>
-        <div className="flex flex-col gap-2 relative z-10 w-full">
-          <div className="font-[var(--font-fredoka)] text-[32px] font-bold text-white leading-[1.1] mb-2 drop-shadow-md">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2 relative z-10 w-full">
+          <div className="font-[var(--font-fredoka)] text-2xl md:text-[32px] font-bold text-white leading-[1.1] mb-2 drop-shadow-md">
             Welcome Home,<br />Abyasa!
           </div>
-          <div className="flex gap-4 text-[13px] font-semibold text-slate-400 mb-2">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 text-[11px] md:text-[13px] font-semibold text-slate-400 mb-2">
             <span className="flex items-center gap-1.5"><Shield size={14} className="text-purple-400" /> 1 Quest today</span>
             <span className="flex items-center gap-1.5"><CalendarDays size={14} className="text-blue-400" /> 3 Events</span>
             <span className="flex items-center gap-1.5"><Flame size={14} className="text-orange-400" /> 14 day streak</span>

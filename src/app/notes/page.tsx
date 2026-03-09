@@ -114,11 +114,11 @@ export default function NotesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-8 relative">
+    <div className="flex flex-col gap-6 animate-fade-up min-h-0 w-full max-w-[1200px] mx-auto pb-24 md:pb-8 px-4 md:px-0 relative">
       
       {/* Top Header / Filters */}
-      <div className="flex items-center justify-between">
-        <div className="flex gap-2">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar w-full lg:w-auto pb-2 lg:pb-0">
           {filters.map((f) => (
             <button
               key={f.label}
@@ -126,7 +126,7 @@ export default function NotesPage() {
               onMouseEnter={playHover}
               tabIndex={0}
               data-focusable={true}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold transition-all cursor-pointer outline-none border ${
+              className={`flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl text-[12px] md:text-[13px] font-bold transition-all cursor-pointer outline-none border whitespace-nowrap ${
                 filter === f.label
                   ? "bg-sidebar2 text-white border-sidebar"
                   : "bg-white text-muted border-blue-500/10 hover:border-sidebar2/30 hover:text-slate-800"
@@ -143,19 +143,19 @@ export default function NotesPage() {
           ))}
         </div>
         
-        <div className="flex gap-3">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+          <div className="relative flex-1 sm:flex-none">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
             <input 
               type="text" 
               placeholder="Search notes..." 
-              className="bg-white border border-blue-500/10 rounded-xl py-2 pl-9 pr-4 text-[13px] font-bold text-slate-700 outline-none focus:border-accent transition-colors w-[200px]"
+              className="bg-white border border-blue-500/10 rounded-xl py-2 pl-9 pr-4 text-[13px] font-bold text-slate-700 outline-none focus:border-accent transition-colors w-full sm:w-[200px]"
             />
           </div>
           <button
             onClick={() => { playSelect(); handleNewNote(); }}
             onMouseEnter={playHover}
-            className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-xl text-[13px] font-bold transition-all cursor-pointer outline-none shadow-[0_4px_12px_var(--color-accent-glow)] hover:bg-accent-light hover:-translate-y-0.5 border-none"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-accent text-white rounded-xl text-[13px] font-bold transition-all cursor-pointer outline-none shadow-[0_4px_12px_var(--color-accent-glow)] hover:bg-accent-light hover:-translate-y-0.5 border-none"
           >
             <span className="text-lg leading-none">+</span> New Note
           </button>
@@ -163,7 +163,7 @@ export default function NotesPage() {
       </div>
 
       <div className="flex items-center gap-2 mb-[-10px]">
-        <h2 className="font-[var(--font-fredoka)] text-[22px] font-bold text-slate-900 flex items-center gap-3">
+        <h2 className="font-[var(--font-fredoka)] text-[20px] md:text-[22px] font-bold text-slate-900 flex items-center gap-3">
           <span className="text-blue-500">📝</span> All Notes
         </h2>
       </div>
