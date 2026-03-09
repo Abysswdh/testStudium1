@@ -58,44 +58,44 @@ export default function HUD() {
       </div>
 
       {/* Music Player */}
-      <div className="flex-1 md:flex-none flex items-center gap-1.5 bg-white/5 p-1 px-2 rounded-xl border border-white/5 overflow-hidden">
+      <div className="flex-1 md:flex-none flex items-center gap-1 bg-white/5 p-1 px-1.5 md:px-2 rounded-xl border border-white/5 overflow-hidden max-w-[180px] md:max-w-none">
         <button 
           onClick={() => { playSelect(); prevTrack(); }}
-          className="p-1.5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer outline-none focus:ring-1 focus:ring-accent"
+          className="p-1 md:p-1.5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer outline-none focus:ring-1 focus:ring-accent"
           title="Previous (P)"
         >
-          <SkipBack size={14} />
+          <SkipBack size={12} className="md:w-[14px] md:h-[14px]" />
         </button>
 
         <button 
           onClick={() => { playSelect(); toggleBGM(); }}
-          className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer outline-none focus:ring-1 focus:ring-accent ${
+          className={`p-1 md:p-1.5 rounded-lg transition-all duration-200 cursor-pointer outline-none focus:ring-1 focus:ring-accent ${
             bgmPlaying ? "bg-accent/20 text-accent shadow-[0_0_12px_var(--color-accent-glow)]" : "bg-white/5 text-slate-400 hover:text-white"
           }`}
           title="Play/Pause (M)"
         >
-          {bgmPlaying ? <Pause size={14} /> : <Play size={14} />}
+          {bgmPlaying ? <Pause size={12} className="md:w-[14px] md:h-[14px]" /> : <Play size={12} className="md:w-[14px] md:h-[14px]" />}
         </button>
 
         <button 
           onClick={() => { playSelect(); nextTrack(); }}
-          className="p-1.5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer outline-none focus:ring-1 focus:ring-accent"
+          className="p-1 md:p-1.5 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer outline-none focus:ring-1 focus:ring-accent"
           title="Next (N)"
         >
-          <SkipForward size={14} />
+          <SkipForward size={12} className="md:w-[14px] md:h-[14px]" />
         </button>
 
-        <div className="w-px h-6 bg-white/10 mx-1 hidden md:block" />
+        <div className="w-px h-6 bg-white/10 mx-0.5 hidden md:block" />
 
-        <div className="marquee-container flex flex-col justify-center min-w-[80px] md:min-w-0">
-          <span className={`text-[9px] md:text-[10px] font-bold tracking-tight text-accent-light uppercase whitespace-nowrap ${bgmPlaying ? 'animate-marquee' : 'text-slate-500'}`}>
+        <div className="marquee-container flex flex-col justify-center min-w-[100px] flex-1 md:flex-none md:w-[150px]">
+          <span className={`text-[8px] md:text-[10px] font-bold tracking-tight text-accent-light uppercase whitespace-nowrap ${bgmPlaying ? 'animate-marquee' : 'text-slate-500'}`}>
             {bgmPlaying ? `${currentTrackName}` : "Paused"}
           </span>
         </div>
 
-        <div className="w-px h-6 bg-white/10 mx-1 hidden sm:block" />
+        <div className="w-px h-6 bg-white/10 mx-1 hidden lg:block" />
 
-        <div className="hidden sm:flex items-center gap-2 px-1">
+        <div className="hidden lg:flex items-center gap-2 px-1">
           <Volume2 size={14} className="text-slate-500" />
           <input 
             type="range"

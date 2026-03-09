@@ -58,36 +58,38 @@ export default function Sidebar() {
 
   return (
     <aside className="
-      fixed bottom-0 left-0 right-0 w-full h-[64px] flex-row items-center px-4 py-1 z-[60]
+      fixed bottom-0 left-0 right-0 w-full h-[64px] flex flex-row items-center px-4 py-1 z-[60]
       bg-sidebar/95 backdrop-blur-3xl border-t border-white/5 shadow-2xl transition-all duration-400
-      md:relative md:flex-col md:items-start md:w-[72px] md:hover:w-[240px] md:focus-within:w-[240px] 
-      md:h-screen md:border-r md:border-t-0 md:py-6 md:pb-6 md:px-0 md:group/sb shrink-0
+      md:relative md:flex-col md:justify-between md:items-start md:w-[72px] md:hover:w-[240px] md:focus-within:w-[240px] 
+      md:h-screen md:border-r md:border-t-0 md:py-6 md:pb-6 md:px-0 group shrink-0
     ">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none hidden md:block" />
       
-      {/* Logo (Hidden on Mobile) */}
-      <div className="hidden md:flex items-center gap-4 px-[14px] mb-8 whitespace-nowrap w-full relative z-10 cursor-pointer">
-        <div className="w-[44px] h-[44px] min-w-[44px] rounded-[14px] bg-accent flex items-center justify-center text-white shadow-[0_0_24px_var(--color-accent-glow)] shrink-0 transition-transform duration-300 hover:scale-105">
-          <Gamepad2 size={24} strokeWidth={2.5} />
+      {/* Top Section: Logo (Hidden on Mobile) */}
+      <div className="hidden md:flex flex-col w-full">
+        <div className="flex items-center gap-4 px-[14px] mb-8 whitespace-nowrap w-full relative z-10 cursor-pointer">
+          <div className="w-[44px] h-[44px] min-w-[44px] rounded-[14px] bg-accent flex items-center justify-center text-white shadow-[0_0_24px_var(--color-accent-glow)] shrink-0 transition-transform duration-300 hover:scale-105">
+            <Gamepad2 size={24} strokeWidth={2.5} />
+          </div>
+          <span className="font-[var(--font-fredoka)] text-[20px] font-bold text-white opacity-0 -translate-x-2 transition-all duration-300 delay-100 group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0 tracking-wide">
+            Studium
+          </span>
         </div>
-        <span className="font-[var(--font-fredoka)] text-[20px] font-bold text-white opacity-0 -translate-x-2 transition-all duration-300 delay-100 group-hover/sb:opacity-100 group-hover/sb:translate-x-0 group-focus-within/sb:opacity-100 group-focus-within/sb:translate-x-0 tracking-wide">
-          Studium
-        </span>
       </div>
 
-      {/* Nav */}
-      <nav className="flex flex-row md:flex-col items-center justify-around md:justify-start gap-1 flex-1 w-full px-2 md:px-3 relative z-10 overflow-y-auto no-scrollbar">
+      {/* Middle Section: Nav */}
+      <nav className="flex flex-row md:flex-col items-center justify-around md:justify-center gap-1 flex-1 w-full px-2 md:px-3 relative z-10 overflow-y-auto no-scrollbar md:my-auto">
         {renderItems.map((item: any, idx) => {
           if (item.type === "header") {
             return (
-              <div key={`header-${idx}`} className="hidden md:flex items-center justify-between text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mt-4 mb-1 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <div key={`header-${idx}`} className="hidden md:flex items-center justify-between text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mt-4 mb-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                 <span>{item.label}</span>
-                {item.label === "Tools" && !isEditingTools && (
+                {item.label === "Tools" && (
                   <button 
-                    onClick={() => { playSelect(); setIsEditingTools(true); }}
-                    className="hover:text-purple-400 p-1"
+                    onClick={() => { playSelect(); setIsEditingTools(!isEditingTools); }}
+                    className={`p-1 transition-colors ${isEditingTools ? "text-accent" : "hover:text-purple-400"}`}
                   >
-                    <PenTool size={12} />
+                    {isEditingTools ? <Check size={14} /> : <PenTool size={12} />}
                   </button>
                 )}
               </div>
@@ -117,7 +119,7 @@ export default function Sidebar() {
 
         {/* Edit Tools Dropdown - Desktop Only */}
         {isEditingTools && (
-          <div className="hidden md:flex mt-2 bg-[#1a1625] border border-[#2e293f] rounded-2xl p-2 flex-col gap-1 w-[216px] animate-in fade-in slide-in-from-top-2 duration-300 opacity-0 group-hover/sb:opacity-100 group-focus-within/sb:opacity-100 shadow-xl ml-2">
+          <div className="hidden md:flex mt-2 bg-[#1a1625] border border-[#2e293f] rounded-2xl p-2 flex-col gap-1 w-[216px] animate-in fade-in slide-in-from-top-2 duration-300 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 shadow-xl ml-2">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 mb-1">Available Tools</span>
             {ALL_TOOLS.map((tool) => {
               const isSelected = activeTools.includes(tool.id);
@@ -162,7 +164,7 @@ export default function Sidebar() {
           <span className="shrink-0 flex items-center justify-center w-[24px]">
             <Settings size={22} strokeWidth={2} />
           </span>
-          <span className="text-[14px] font-bold opacity-0 -translate-x-2 transition-all duration-300 delay-[50ms] group-hover/sb:opacity-100 group-hover/sb:translate-x-0 group-focus-within/sb:opacity-100 group-focus-within/sb:translate-x-0">
+          <span className="text-[14px] font-bold opacity-0 -translate-x-2 transition-all duration-300 delay-[50ms] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0">
             Settings
           </span>
         </button>
@@ -171,7 +173,7 @@ export default function Sidebar() {
           <div className="w-[32px] h-[32px] min-w-[32px] rounded-full bg-[linear-gradient(45deg,var(--color-accent),var(--color-accent-light))] flex items-center justify-center shrink-0 shadow-[0_0_12px_var(--color-accent-glow)] overflow-hidden">
             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Abyasa&backgroundColor=transparent" alt="Avatar" className="w-[120%] h-[120%] object-cover mt-1" />
           </div>
-          <div className="opacity-0 -translate-x-2 transition-all duration-300 delay-[100ms] group-hover/sb:opacity-100 group-hover/sb:translate-x-0 group-focus-within/sb:opacity-100 group-focus-within/sb:translate-x-0 flex-1 min-w-0">
+          <div className="opacity-0 -translate-x-2 transition-all duration-300 delay-[100ms] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0 flex-1 min-w-0">
             <div className="text-[13px] font-extrabold text-white leading-tight truncate">Abyasa Wedha</div>
             <div className="text-[10px] text-accent-light font-bold flex items-center gap-1">
               <span>Lv.7 Mage</span>
@@ -196,8 +198,8 @@ function NavItem({ item, isActive, isEditingTools, playSelect, playHover, router
       data-focusable={!isEditingTools}
       className={`
         w-[48px] h-[48px] rounded-2xl
-        md:group-hover/sb:w-full
-        md:group-focus-within/sb:w-full
+        md:group-hover:w-full
+        md:group-focus-within:w-full
         flex items-center justify-center md:justify-start gap-3.5 px-[12px]
         cursor-pointer outline-none overflow-hidden whitespace-nowrap
         transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -222,8 +224,8 @@ function NavItem({ item, isActive, isEditingTools, playSelect, playHover, router
         className={`hidden md:block text-[14px] font-bold flex-1 text-left
           opacity-0 -translate-x-2
           transition-all duration-300 delay-[50ms]
-          md:group-hover/sb:opacity-100 md:group-hover/sb:translate-x-0
-          md:group-focus-within/sb:opacity-100 md:group-focus-within/sb:translate-x-0
+          group-hover:opacity-100 group-hover:translate-x-0
+          group-focus-within:opacity-100 group-focus-within:translate-x-0
           ${isActive && !isEditingTools ? "text-white" : ""}
         `}
       >
@@ -231,7 +233,7 @@ function NavItem({ item, isActive, isEditingTools, playSelect, playHover, router
       </span>
       
       {item.badge && !isEditingTools && (
-        <span className="hidden md:block bg-accent text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center opacity-0 transition-opacity duration-300 delay-[100ms] md:group-hover/sb:opacity-100 md:group-focus-within/sb:opacity-100 shrink-0 shadow-[0_0_10px_var(--color-accent-glow)]">
+        <span className="hidden md:block bg-accent text-white text-[10px] font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center opacity-0 transition-opacity duration-300 delay-[100ms] group-hover:opacity-100 group-focus-within:opacity-100 shrink-0 shadow-[0_0_10px_var(--color-accent-glow)]">
           {item.badge}
         </span>
       )}
