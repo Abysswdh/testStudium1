@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg: #09090b;
+  --color-surface: rgba(24, 24, 27, 0.6);
+  --color-surface-solid: #18181b;
+  --color-surface2: rgba(39, 39, 42, 0.8);
+  --color-sidebar: rgba(9, 9, 11, 0.8);
+  --color-sidebar2: rgba(39, 39, 42, 0.9);
+  --color-accent: #3b82f6;
+  --color-accent-light: #60a5fa;
+  --color-accent-glow: rgba(59,130,246,0.4);
+  --color-gold: #fbbf24;
+  --color-green: #34d399;
+  --color-red: #f87171;
+  --color-muted: #a1a1aa;
+  --color-border: rgba(255,255,255,0.08);
+  --font-fredoka: 'Fredoka', sans-serif;
+  --font-dm: 'DM Sans', sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: #f4f4f5;
+  font-family: var(--font-dm);
+  overflow: hidden;
+  background-image: radial-gradient(circle at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 60%);
+  background-attachment: fixed;
 }
+
+/* ══════════════════════════════════════
+   react-grid-layout (inlined from node_modules)
+══════════════════════════════════════ */
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, width, height;
+}
+.react-grid-item img { pointer-events: none; user-select: none; }
+.react-grid-item.cssTransforms { transition-property: transform, width, height; }
+.react-grid-item.resizing { transition: none; z-index: 1; will-change: width, height; }
+.react-grid-item.react-draggable-dragging { transition: none; z-index: 3; will-change: transform; }
+.react-grid-item.dropping { visibility: hidden; }
+
+.react-grid-item.react-grid-placeholder {
+  background: var(--color-accent) !important;
+  opacity: 0.15 !important;
+  transition-duration: 100ms;
+  z-index: 2;
+  user-select: none;
+  border-radius: 16px !important;
+}
+
+/* ── Resize handles ── */
+.react-resizable { position: relative; }
+.react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
+  background-position: bottom right;
+  padding: 0 3px 3px 0;
+}
+.react-resizable-hide > .react-resizable-handle { display: none; }
+
+.react-grid-item > .react-resizable-handle { opacity: 0; }
+.react-grid-item:hover > .react-resizable-handle { opacity: 1; }
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.react-resizable-handle-sw { bottom: 0; left: 0; cursor: sw-resize; transform: rotate(90deg); }
+.react-resizable-handle-se { bottom: 0; right: 0; cursor: se-resize; }
+.react-resizable-handle-nw { top: 0; left: 0; cursor: nw-resize; transform: rotate(180deg); }
+.react-resizable-handle-ne { top: 0; right: 0; cursor: ne-resize; transform: rotate(270deg); }
+.react-resizable-handle-w, .react-resizable-handle-e { top: 50%; margin-top: -10px; cursor: ew-resize; }
+.react-resizable-handle-w { left: 0; transform: rotate(135deg); }
+.react-resizable-handle-e { right: 0; transform: rotate(315deg); }
+.react-resizable-handle-n, .react-resizable-handle-s { left: 50%; margin-left: -10px; cursor: ns-resize; }
+.react-resizable-handle-n { top: 0; transform: rotate(225deg); }
+.react-resizable-handle-s { bottom: 0; transform: rotate(45deg); }
+
+/* ══════════════════════════════════════
+   Keyboard focus ring (Animated)
+══════════════════════════════════════ */
+@keyframes focusPulse {
+  0% { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 12px rgba(59, 130, 246, 0.2); }
+  50% { box-shadow: 0 0 0 3.5px rgba(96, 165, 250, 0.8), 0 0 20px rgba(59, 130, 246, 0.5); }
+  100% { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 12px rgba(59, 130, 246, 0.2); }
+}
+
+[data-focusable]:focus {
+  outline: none;
+  border-radius: inherit;
+  animation: focusPulse 2s ease-in-out infinite;
+  z-index: 50;
+}
+[data-focusable]:focus:not(:focus-visible) {
+  animation: none;
+  box-shadow: none;
+}
+
+/* ══════════════════════════════════════
+   Animations
+══════════════════════════════════════ */
+@keyframes shimmer {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+
+.bar-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes bossFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes charIdle {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.35s ease both;
+}
+
+/* Music Player Marquee */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 8s linear infinite;
+}
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 120px;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
